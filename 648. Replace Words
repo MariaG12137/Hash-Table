@@ -1,0 +1,28 @@
+/*
+In English, we have a concept called root, which can be followed by some other word to form another longer word - let's call this word successor. For example, when the root "an" is followed by the successor word "other", we can form a new word "another".
+
+Given a dictionary consisting of many roots and a sentence consisting of words separated by spaces, replace all the successors in the sentence with the root forming it. If a successor can be replaced by more than one root, replace it with the root that has the shortest length.
+
+Return the sentence after the replacement.
+*/
+var replaceWords = function(dictionary, sentence) {
+    let map = new Map();
+    for(let dic of dictionary){
+        if(!map.has(dic.length)){
+            map.set(dic.length,new Set());
+        }
+        map.get(dic.length).add(dic);
+    }
+    let array = sentence.split(" ");
+    
+    for(let i=0; i<array.length; i++){
+        for(let j=1; j<array[i].length;j++){
+            let piece = array[i].slice(0,j);
+            if(map.has(j) && map.get(j).has(piece)){
+                array[i] = piece;
+                break;
+            }
+        }
+    }
+    return array.join(" ");
+};
