@@ -1,0 +1,60 @@
+/*
+Determine if a 9 x 9 Sudoku board is valid. Only the filled cells need to be validated according to the following rules:
+
+Each row must contain the digits 1-9 without repetition.
+Each column must contain the digits 1-9 without repetition.
+Each of the nine 3 x 3 sub-boxes of the grid must contain the digits 1-9 without repetition.
+Note:
+
+A Sudoku board (partially filled) could be valid but is not necessarily solvable.
+Only the filled cells need to be validated according to the mentioned rules.
+*/
+
+var isValidSudoku = function(board) {
+    let row = new Map();
+    let col = new Map();
+    let subBox = new Map();
+    let sub = [0,3,6];
+    
+    for(let i=0; i<=8; i++){
+        row.set(i,new Set());
+        col.set(i,new Set());
+    }
+ 
+    for(let i of sub){
+        for(let j of sub){
+            subBox.set([i,j].join(""),new Set());
+        }
+    }
+    let diag = [1,4,7];
+    
+    for(let i=0; i<9; i++){
+        for(let j=0; j<9; j++){
+            if(board[i][j]!== "."){
+                if(row.get(i).has(board[i][j]) || col.get(j).has(board[i][j])){
+                    console.log("hey")
+                    return false;
+                }
+                row.get(i).add(board[i][j]);
+                col.get(j).add(board[i][j]);
+            }
+            
+            if(sub.includes(i) && sub.includes(j)){
+                for(let a=0; a<3; a++){
+                    for(let b=0; b<3; b++){
+                        let set = subBox.get([i,j].join(""));
+                        if(board[i+a][j+b]!== "."){
+                            if(set.has(board[i+a][j+b])){
+                                console.log(set);
+                                return false;
+                            }else{
+                                set.add(board[i+a][j+b]);
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+    return true;
+};
