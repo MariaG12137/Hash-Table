@@ -1,0 +1,21 @@
+/*
+Given a non-empty list of words, return the k most frequent elements.
+
+Your answer should be sorted by frequency from highest to lowest. If two words have the same frequency, then the word with the lower alphabetical order comes first.
+*/
+var topKFrequent = function(words, k) {
+    let map = new Map();
+    for(let word of words){
+        if(!map.has(word)){
+            map.set(word,0);
+        }
+        map.set(word, map.get(word)+1);
+    }
+    let result = [];
+    let mapSort = [...map.entries()].sort((a,b)=>a[1]-b[1]||b[0].localeCompare(a[0]));
+    while(k>0){
+        result.push(mapSort.pop()[0]);
+        k--;
+    }
+    return result;
+};
