@@ -1,0 +1,25 @@
+var GetImportance = function(employees, id) {
+    let sum = 0;
+    let map = new Map();
+    
+    for(let employee of employees){
+        map.set(employee.id,employee);
+    }
+    
+    function importance(employee){
+        if(!employee){
+            return;
+        }
+        sum += employee.importance;
+        
+        if(!employee.subordinates){
+            return;
+        }
+        console.log(employee.subordinates)
+        for(let val of employee.subordinates){
+            importance(map.get(val));
+        }
+    }
+    importance(map.get(id));
+    return sum;
+};
