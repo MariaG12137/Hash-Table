@@ -1,0 +1,43 @@
+/*
+Given a List of words, return the words that can be typed using letters of alphabet on only one row's of American keyboard like the image below.
+*/
+var findWords = function(words) {
+    let one = new Set("qwertyuiop".split("").map(char=>char.toLowerCase()));
+    let two = new Set("asdfghjkl".split("").map(char=>char.toLowerCase()));
+    let three = new Set("zxcvbnm".split("").map(char=>char.toLowerCase()));
+    
+    let result = [];
+    for(let word of words){
+        let oneStat = true;
+        let twoStat = true;
+        let threeStat = true;
+        
+        for(let char of word){
+            if(oneStat && !one.has(char.toLowerCase())){
+                oneStat = false;
+            }
+            if(twoStat && !two.has(char.toLowerCase())){
+                twoStat = false;
+            }
+            if(threeStat && !three.has(char.toLowerCase())){
+                threeStat = false;
+            }
+        }
+        if(oneStat || twoStat || threeStat){
+            result.push(word);
+        }
+    }
+    
+    return result;
+};
+===================================================================================================================================================
+var findWords = function(words) {
+    const t = new Set("qwertyuiop");
+    const m = new Set("asdfghjkl");
+    const b = new Set("zxcvbnm");
+    
+    return words.filter((word) => {
+        const chars = word.toLowerCase().split("");
+        return (chars.every(c => t.has(c)) || chars.every(c => m.has(c)) || chars.every(c => b.has(c)));
+    });
+};
