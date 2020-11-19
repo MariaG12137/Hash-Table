@@ -1,0 +1,28 @@
+/*
+In an array A of 0s and 1s, how many non-empty subarrays have sum S?
+*/
+var numSubarraysWithSum = function(A, S) {
+    let sum = [0];
+    let result = 0;
+    const len = A.length-1;
+    
+    for(let i=0; i<A.length; i++){
+        sum.push(A[i]+sum[i]);
+    }
+
+    for(let i=1; i<sum.length; i++){
+        if(sum[i]===S){
+            result++;
+        }
+        let target = S+sum[i];
+        for(let j=i+1; j<sum.length; j++){
+            if(sum[j]>target){
+                break;
+            }
+            if(sum[j]===target){
+                result++;
+            }
+        } 
+    }
+    return result;
+};
