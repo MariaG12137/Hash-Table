@@ -1,0 +1,22 @@
+var subdomainVisits = function(cpdomains) {
+    let map = new Map();
+    for(let domain of cpdomains){
+        let domainArray = domain.split(" ");
+        let count = parseInt(domainArray[0]);
+        let sub = domainArray[1].split(".");
+
+        for(let i=0; i<sub.length; i++){
+            let subSlice = sub.slice(i,sub.length).join(".");
+            if(!map.has(subSlice)){
+                map.set(subSlice,0);
+            }
+            map.set(subSlice, map.get(subSlice)+count);
+        }
+    }
+    let result = [];
+    for(let [subSlice,count] of map){
+        result.push(count+" "+subSlice);
+    }
+
+    return result;
+};
