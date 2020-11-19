@@ -1,0 +1,27 @@
+/*
+Given a set of points in the xy-plane, determine the minimum area of a rectangle formed from these points, with sides parallel to the x and y axes.
+
+If there isn't any rectangle, return 0.
+*/
+var minAreaRect = function(points) {
+    let map = new Map();
+    for(let [x,y] of points){
+        if(!map.has(x)){
+            map.set(x,new Set());
+        }
+        map.get(x).add(y);
+    }
+    
+    let result = Infinity;
+    for(let [x1,y1] of points){
+        for(let [x2,y2] of points){
+            if(x1===x2 || y1===y2){
+                continue;
+            }
+            if(map.get(x1).has(y2) && map.get(x2).has(y1)){
+                result = Math.min(result, Math.abs(x1-x2)* Math.abs(y1-y2));
+            }
+        }
+    }
+    return result===Infinity?0:result;
+};
