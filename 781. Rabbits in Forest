@@ -1,0 +1,19 @@
+/*
+In a forest, each rabbit has some color. Some subset of rabbits (possibly all of them) tell you how many other rabbits have the same color as them. Those answers are placed in an array.
+
+Return the minimum number of rabbits that could be in the forest.
+*/
+var numRabbits = function(answers) {
+    let map = new Map();
+    for(let ans of answers){
+        if(!map.has(ans)){
+            map.set(ans,0);
+        }
+        map.set(ans,map.get(ans)+1);
+    }
+    let ans = 0;
+    for(let [num, count] of map.entries()){
+        ans += Math.ceil(count/(num+1))*(num+1);
+    }
+    return ans
+};
