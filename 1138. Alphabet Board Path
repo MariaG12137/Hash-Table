@@ -1,0 +1,49 @@
+/*
+On an alphabet board, we start at position (0, 0), corresponding to character board[0][0].
+
+Here, board = ["abcde", "fghij", "klmno", "pqrst", "uvwxy", "z"], as shown in the diagram below.
+*/
+var alphabetBoardPath = function(target) {
+    let board = ["abcde", "fghij", "klmno", "pqrst", "uvwxy", "z"];
+    let map = new Map();
+    for(let i=0; i<board.length; i++){
+        for(let j=0; j<board[i].length; j++){
+            if(!map.has(board[i][j])){
+                map.set(board[i][j],[i,j]);
+            }
+        }
+    }
+    
+    let result = [];
+    let prev = [0,0];
+    
+    for(let char of target){
+        let row = map.get(char)[0]-prev[0];
+        let col = map.get(char)[1]-prev[1];
+        let rowMove = [];
+        let colMove = [];
+        
+        if(row>0){
+            rowMove = rowMove.concat(new Array(row).fill("D"));
+        }else if(row<0){
+            rowMove = rowMove.concat(new Array(-row).fill("U"));
+        }
+        
+        if(col>0){
+            colMove = colMove.concat(new Array(col).fill("R"));
+        }else if (col<0){
+            colMove = colMove.concat(new Array(-col).fill("L"));
+        }
+        
+        if(char==="z"){
+            result = result.concat(colMove);
+            result = result.concat(rowMove);
+        }else{
+            result = result.concat(rowMove);
+            result = result.concat(colMove);
+        }
+        result.push("!");
+        prev = map.get(char);
+    }
+    return result.join("");
+};
