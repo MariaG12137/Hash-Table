@@ -1,0 +1,20 @@
+/*
+Given an array of integers arr, write a function that returns true if and only if the number of occurrences of each value in the array is unique.
+*/
+
+var uniqueOccurrences = function(arr) {
+    let map = new Map();
+    for(let num of arr){
+        if(!map.has(num)){
+            map.set(num,0);
+        }
+        map.set(num, map.get(num)+1);
+    }
+    let set = new Set();
+    let count = 0;
+    for(let value of map.values()){
+        set.add(value);
+        count++;
+    }
+    return set.size === count;
+};
