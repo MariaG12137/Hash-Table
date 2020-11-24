@@ -1,0 +1,19 @@
+/*
+Given words first and second, consider occurrences in some text of the form "first second third", where second comes immediately after first, and third comes immediately after second.
+
+For each such occurrence, add "third" to the answer, and return the answer.
+*/
+
+var findOcurrences = function(text, first, second) {
+    text = text.split(" ");
+
+    let prev = text[0];
+    let result = [];
+    for(let i=1; i<text.length-1; i++){
+        if(prev === first && text[i]===second){
+            result.push(text[i+1]);
+        }
+        prev = text[i];
+    }
+    return result;
+};
