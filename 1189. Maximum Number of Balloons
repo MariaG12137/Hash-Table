@@ -1,0 +1,34 @@
+/*
+Given a string text, you want to use the characters of text to form as many instances of the word "balloon" as possible.
+
+You can use each character in text at most once. Return the maximum number of instances that can be formed.
+*/
+
+var maxNumberOfBalloons = function(text) {
+    let map = new Map();
+    let balloon = ["b","a","l","o","n"];
+    let double = new Set(["l","o"]);
+
+    for(let char of balloon){
+        map.set(char,0);
+    }
+    
+    for(let char of text){
+        if(map.has(char)){
+            map.set(char,map.get(char)+1);
+        }
+    }
+
+    let min = Infinity;
+    for(let [key,value] of map.entries()){
+        if(double.has(key)){
+            let half = Math.floor(value/2);
+            if(half<min){
+                min = half;
+            }
+        }else if(value<min){
+            min = value;
+        }
+    }
+    return min;
+};
