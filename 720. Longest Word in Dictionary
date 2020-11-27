@@ -1,0 +1,33 @@
+/*
+Given a list of strings words representing an English Dictionary, find the longest word in words that can be built one character at a time by other words in words. If there is more than one possible answer, return the longest word with the smallest lexicographical order.
+
+If there is no answer, return the empty string.
+*/
+
+var longestWord = function(words) {
+    let map = new Map();
+    for(let word of words){
+        if(!map.has(word.length)){
+            map.set(word.length, new Set());
+        }
+        map.get(word.length).add(word);
+    }
+    
+    let len = 2;
+    let result = map.get(1);
+    while(map.has(len)){
+        let temp = new Set();
+        for(let word of map.get(len)){
+            if(result.has(word.slice(0,word.length-1))){
+                temp.add(word);
+            }
+        }
+        if(temp.size !== 0){
+            result = temp;
+        }else{
+            break;
+        }
+        len += 1;
+    }
+    return Array.from(result).sort((a,b)=>a.localeCompare(b))[0];
+};
