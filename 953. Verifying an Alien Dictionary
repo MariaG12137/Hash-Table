@@ -1,0 +1,31 @@
+/*
+In an alien language, surprisingly they also use english lowercase letters, but possibly in a different order. The order of the alphabet is some permutation of lowercase letters.
+
+Given a sequence of words written in the alien language, and the order of the alphabet, return true if and only if the given words are sorted lexicographicaly in this alien language.
+*/
+var isAlienSorted = function(words, order) {
+    let map = new Map();
+    for(let i=0; i<order.length; i++){
+        map.set(order[i],i);
+    }
+    let wordsSort = [...words];
+    wordsSort.sort((a,b)=>{
+        let i=0;
+        const min = Math.min(a.length,b.length);
+        while(map.get(a[i])===map.get(b[i]) && i<min){
+            i++;
+        }
+        if(i===min){
+            return a.length - b.length;
+        }else{
+            return map.get(a[i])-map.get(b[i]);
+        }
+    })
+
+    for(let i=0; i<words.length; i++){
+        if(words[i]!==wordsSort[i]){
+            return false;
+        }
+    }
+    return true;
+};
